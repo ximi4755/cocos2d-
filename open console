@@ -1,0 +1,35 @@
+--在cocos lua项目目录下，\myLuaTest\frameworks\runtime-src\proj.win32\main.cpp中 替换为：
+
+-----------------------------------
+#include "main.h"
+#include "SimulatorWin.h"
+#include <shellapi.h>
+
+int APIENTRY _tWinMain(HINSTANCE hInstance,
+	HINSTANCE hPrevInstance,
+	LPTSTR    lpCmdLine,
+	int       nCmdShow)
+{
+	AllocConsole();
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
+  auto simulator = SimulatorWin::getInstance();
+	int ret = simulator->run();
+	FreeConsole();
+	return ret;
+}
+------------------------------------
+
+
+--添加的部分为
+AllocConsole();
+freopen("CONIN$", "r", stdin);
+freopen("CONOUT$", "w", stdout);
+freopen("CONOUT$", "w", stderr);
+
+FreeConsole();
+
